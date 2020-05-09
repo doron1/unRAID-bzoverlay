@@ -79,7 +79,7 @@ Alt 1: Create the initramfs overlay by hand (need cpio installed)
 mkdir -p rootfs/{etc,license}
 cat << EOF > rootfs/etc/fstab
 /dev/disk/by-label/UNRAID   /license vfat auto,ro,shortname=mixed 0 1
-/dev/disk/by-label/BOOTDISK /boot    vfat auto,rw,exec,noatime,nodiratime,umask=0,shortname=mixed 0 1
+/dev/disk/by-label/BOOTDISK /boot    vfat auto,rw,exec,noatime,nodiratime,dmask=77,fmask=177,shortname=mixed 0 1
 EOF
 cd rootfs
 find . | cpio -o -H newc | xz > /mnt/unraid_disk/bzoverlay
@@ -87,7 +87,7 @@ find . | cpio -o -H newc | xz > /mnt/unraid_disk/bzoverlay
 
 Alt 2: Install my premade overlay (Does not need cpio)
 ```
-wget https://raw.githubusercontent.com/thohell/unRAID-bzoverlay/master/bzoverlay -O /mnt/unraid_disk/bzoverlay
+wget https://raw.githubusercontent.com/doron1/unRAID-bzoverlay/master/bzoverlay -O /mnt/unraid_disk/bzoverlay
 ```
 
 
