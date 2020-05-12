@@ -71,6 +71,7 @@ cp -R /boot/* /mnt/unraid_disk
 Patch make_bootable_linux and execute it to install syslinux to the hard drive.
 ```
 sed -e "s|UNRAID|BOOTDISK|g" -i /mnt/unraid_disk/make_bootable_linux
+sed "s|UNRAID|BOOTDISK|g" -i /mnt/unraid_disk/syslinux/make_bootable_linux.sh
 /mnt/unraid_disk/make_bootable_linux
 ```
 
