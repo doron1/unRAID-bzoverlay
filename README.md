@@ -2,6 +2,8 @@
 
 ## Big fat disclaimer
 
+**THIS DOES NOT ACTUALLY WORK, and probably never has. It will work (sort of) if your designated boot media is also a USB flash drive, in which case the drive with the license will be mounted Read Only and the boot drive will be mounted Read Write (and will have settings and new versions written to it). It will not help you booting Unraid from an HDD.**
+
 Modifying your unRAID server in **any** way may always put your data at risk. This, of course, also applies to this modification. You should always keep backups of any files you absolutely can not afford to lose. **Any and all responibility for problems that may arise as a result from modifying unRAID in any way is yours, and yours alone!**
 
 ## Run unRAID from a hard drive - the easy way.
@@ -70,7 +72,7 @@ cp -R /boot/* /mnt/unraid_disk
 
 Patch make_bootable_linux and execute it to install syslinux to the hard drive.
 ```
-sed -e "s|UNRAID|BOOTDISK|g" -i /mnt/unraid_disk/make_bootable_linux
+sed "s|UNRAID|BOOTDISK|g" -i /mnt/unraid_disk/make_bootable_linux
 sed "s|UNRAID|BOOTDISK|g" -i /mnt/unraid_disk/syslinux/make_bootable_linux.sh
 /mnt/unraid_disk/make_bootable_linux
 ```
@@ -81,9 +83,13 @@ mkdir -p rootfs/{etc,license}
 cat << EOF > rootfs/etc/fstab
 /dev/disk/by-label/UNRAID   /license vfat auto,ro,shortname=mixed 0 1
 /dev/disk/by-label/BOOTDISK /boot    vfat auto,rw,exec,noatime,nodiratime,dmask=77,fmask=177,shortname=mixed 0 1
+/boot/bzmodules            /lib/modules  squashfs  ro,defaults  0  2
+/boot/bzfirmware           /lib/firmware squashfs  ro,defaults  0  2
+tmpfs                      /dev/shm      tmpfs     defaults     0  0
+hugetlbfs                  /hugetlbfs    hugetlbfs defaults     0  0
 EOF
 cd rootfs
-find . | cpio -o -H newc | xz > /mnt/unraid_disk/bzoverlay
+find . | cpio -o -H newc | xz --check=crc32 --x86 --lzma2=preset=9e > /mnt/unraid_disk/bzoverlay
 ```
 
 Alt 2: Install my premade overlay (Does not need cpio)
