@@ -2,7 +2,7 @@
 
 ## Big fat disclaimer
 
-**THIS DOES NOT ACTUALLY WORK, and probably never has. It will work (sort of) if your designated boot media is also a USB flash drive, in which case the drive with the license will be mounted Read Only and the boot drive will be mounted Read Write (and will have settings and new versions written to it). It will not help you booting Unraid from an HDD.**
+**THIS DOES NOT ACTUALLY WORK, at least as of Unraid 6.4.0 (where bzmodules was introduced). It will work (sort of) if your designated boot media is also a USB flash drive, in which case the drive with the license will be mounted Read Only and the boot drive will be mounted Read Write (and will have settings and new versions written to it). It will not help you booting Unraid from an HDD.**
 
 Modifying your unRAID server in **any** way may always put your data at risk. This, of course, also applies to this modification. You should always keep backups of any files you absolutely can not afford to lose. **Any and all responibility for problems that may arise as a result from modifying unRAID in any way is yours, and yours alone!**
 
